@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
   //   content: 'User By Id',
   //   method: 'GET characters for a User',
   // });
-  res.send(`hi this is the get user by id: ${id} route`);
+  res.send(`hi this is the get user by id: ${req.params.id} route`);
 });
 
 module.exports = router;
