@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        title Home Page
+    body
+      nav(class='navbar')
+        h1(class='nav-header') 
+          a(href="/" class='nav-link') D&D Dungeon Builder
+        ul
+          li
+            a(href="/characters" class='nav-link') Characters 
+          li 
+            a(href="/monsters" class='nav-link') Monsters  
+          li 
+            a(href="/dungeons" class='nav-link') Dungeons
+          li 
+            a(href=authRoute class='nav-link')= authRoute 
+      h1 This h1 is from the layout.
+      hr
+      block content

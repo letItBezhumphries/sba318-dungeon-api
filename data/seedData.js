@@ -9,6 +9,7 @@ function createRandomUsers(count) {
   while (count > 0) {
     users.push({
       id: faker.string.uuid(),
+      name: faker.person.fullName(),
       username: faker.internet.userName(),
       email: faker.internet.email(),
       avatar: faker.image.avatar(),
