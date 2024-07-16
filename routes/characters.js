@@ -59,7 +59,7 @@ router.post('/new/:id', (req, res, next) => {
     userId: id,
     name: name,
     gender: gender,
-    class_type: class_type,
+    class: class_type,
     age: age,
     hit_points: hit_points,
   };
@@ -67,7 +67,7 @@ router.post('/new/:id', (req, res, next) => {
   characters.push(newCharacter);
 
   // res.status(201).redirect(`/characters/:${newCharacter.id}`);
-  res.status(201).render('characters', {
+  res.status(201).render('character', {
     page_title: `${newCharacter.name} was just created`,
     autheticated: true,
     character: newCharacter,
@@ -79,17 +79,25 @@ router.post('/new/:id', (req, res, next) => {
 // @desc     update a character
 // @access   Private
 router.put('/:chrId', (req, res, next) => {
-  const character = characters.find((chr, indx) => {
-    if (chr.id === +req.params.chrId) {
+  const { chrId } = req.params;
+
+  function isTarget(resource, index, resourceArr) {
+    if (resource.id === chrId) {
       for (const key in req.body) {
-        characters[indx][key] = req.body[key];
+        resourceArr[index][key] = req.body[key];
       }
       return true;
     }
+  }
+
+  const character = characters.find((chr, i, characters) => {
+    return isTarget(chr, i, characters);
   });
 
+  console.log('PUT route update character by id:', character);
+
   if (character) {
-    res.status(203).render('characters', {
+    res.status(203).render('character', {
       page_title: `${character.name} was just updated`,
       autheticated: true,
       character: character,
@@ -102,22 +110,29 @@ router.put('/:chrId', (req, res, next) => {
   // else next();
 });
 
-// @route    DELETE characters/:chrId
+// @route    DELETE /api/characters/:chrId
 // @desc     Delete character by id
 // @access   Private
 router.delete('/:chrId', (req, res, next) => {
-  const character = characters.find((chr, indx) => {
-    if (chr.id === +req.params.chrId) {
-      characters.splice(indx, 1);
+  const { chrId } = req.params;
+  // testing function to pass to user find
+  function isTarget(resource, index, resourceArr) {
+    if (resource.id === chrId) {
+      resourceArr.splice(index, 1);
       return true;
     }
+  }
+
+  const character = characters.find((chr, i, characters) => {
+    return isTarget(chr, i, characters);
   });
+  console.log('DELETE character by id:', character);
   // if (character) res.status(204).json(character);
   // else next();
   if (character) {
-    res.status(204).render('characters', {
+    res.status(204).render('character', {
       page_title: `${character.name} was just deleted`,
-      autheticated: true,
+      authenticated: true,
       character: character,
     });
   } else {

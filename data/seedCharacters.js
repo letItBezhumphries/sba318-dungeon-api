@@ -31,7 +31,7 @@ const createMockCharacters = function (users) {
         userId: user.userId,
         name: faker.person.firstName() + ' ' + faker.person.lastName(),
         gender: index % 2 !== 0 ? faker.person.sex() : faker.person.gender(),
-        class: randomClass,
+        class_type: randomClass,
         age: faker.number.int({ min: 15, max: 160 }),
         hit_points: faker.number.int({ min: 12, max: 34 }),
       });
