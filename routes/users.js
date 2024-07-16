@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
     url: req.url,
     users: users,
   });
-  // res.send('hi this is the get all users route');
 });
 
 // @route    GET /api/users/profile/:id

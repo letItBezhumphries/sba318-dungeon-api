@@ -1,4 +1,15 @@
 extends layouts/main-layout.pug
 
+block content_authenticatedNav
+  if authenticated
+    li(class='nav-link') 
+      a(href="/logout") Logout
+  else
+    li(class='nav-link') 
+      a(href="/login") Login  
 block content
-  p This content is from characters.pug! 
+  section
+    if characters
+      ul
+        for character in characters
+          li=character 

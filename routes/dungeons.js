@@ -47,7 +47,7 @@ router.post('/', (req, res, next) => {
   const { userId, size, dungeon_name, monsters } = req.body;
 
   let newDungeon = {
-    id: faker.string.uuid(),
+    id: faker.string.uuid().split('-').join(''),
     userId: userId,
     size: size,
     dungeon_name: dungeon_name,

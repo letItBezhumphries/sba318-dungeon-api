@@ -5,10 +5,11 @@ const { faker } = require('@faker-js/faker');
 /* pre-db characters data */
 const characters = require('../data/characters');
 
-// @route    GET /characters
+// @route    GET /api/characters
 // @desc     get all characters
 // @access   Public
 router.get('/', (req, res) => {
+  console.log('GET all characters:', characters);
   res.status(200).render('characters', {
     page_title: 'Characters of the multiverse!',
     autheticated: false,
@@ -16,14 +17,20 @@ router.get('/', (req, res) => {
   });
 });
 
-// @route    GET /characters/:id
+// @route    GET /api/characters/:chrId
 // @desc     get character by id
 // @access   Public
 router.get('/:chrId', (req, res, next) => {
-  const character = characters.find((ch) => {
-    if (ch.id === +req.params.chrId) {
+  const { chrId } = req.params;
+
+  function isTarget(resource) {
+    if (resource.id === chrId) {
       return true;
     }
+  }
+
+  const character = characters.find((ch) => {
+    return isTarget(ch);
   });
 
   if (character) {
@@ -38,17 +45,18 @@ router.get('/:chrId', (req, res, next) => {
   }
 });
 
-// @route    POST /characters
+// @route    POST /api/characters/new/:id
 // @desc     creates a new character
 // @access   private
-router.post('/', (req, res, next) => {
+router.post('/new/:id', (req, res, next) => {
+  const { id } = req.params;
   // console.log('req.body:', req.body);
-  const { img, userId, name, gender, class_type, age, hit_points } = req.body;
+  const { name, gender, class_type, age, hit_points } = req.body;
 
   let newCharacter = {
-    id: faker.string.uuid(),
-    img: img,
-    userId: userId,
+    id: faker.string.uuid().split('-').join(''),
+    img: faker.image.urlLoremFlickr({ category: class_type }),
+    userId: id,
     name: name,
     gender: gender,
     class_type: class_type,
