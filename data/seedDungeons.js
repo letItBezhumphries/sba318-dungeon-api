@@ -47,7 +47,7 @@ const createDungeonForUser = function (user) {
   const dungeonMonsters = createMonsterList(randomMonsterCount);
 
   return {
-    id: faker.string.uuid(), // this is the dungeons id
+    id: faker.string.uuid().split('-').join(''), // this is the dungeons id
     userId: user.userId,
     size: randomGridSize,
     dungeon_name: environments[randomEnvironmentsIndex],

@@ -8,7 +8,9 @@ const monsters = require('../data/monsters');
 // @desc     get all monsters
 // @access   Public
 router.get('/', (req, res) => {
-  res.status(200).render('monsters');
+  res.status(200).render('monsters', {
+    monsters: monsters,
+  });
 });
 
 module.exports = router;

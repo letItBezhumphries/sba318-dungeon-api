@@ -9,7 +9,11 @@ const characters = require('../data/characters');
 // @desc     get all characters
 // @access   Public
 router.get('/', (req, res) => {
-  res.status(200).render('characters');
+  res.status(200).render('characters', {
+    page_title: 'Characters of the multiverse!',
+    autheticated: false,
+    characters: characters,
+  });
 });
 
 // @route    GET /characters/:id
@@ -23,7 +27,12 @@ router.get('/:chrId', (req, res, next) => {
   });
 
   if (character) {
-    res.status(200).json(character);
+    // res.status(200).json(character);
+    res.status(200).render('character', {
+      page_title: `${character.name} details`,
+      autheticated: true,
+      character: character,
+    });
   } else {
     next();
   }
@@ -49,7 +58,12 @@ router.post('/', (req, res, next) => {
 
   characters.push(newCharacter);
 
-  res.status(201).redirect(`/characters/:${newCharacter.id}`);
+  // res.status(201).redirect(`/characters/:${newCharacter.id}`);
+  res.status(201).render('characters', {
+    page_title: `${newCharacter.name} was just created`,
+    autheticated: true,
+    character: newCharacter,
+  });
 });
 
 // Update route - update a character by id
@@ -65,8 +79,19 @@ router.put('/:chrId', (req, res, next) => {
       return true;
     }
   });
-  if (character) res.status(203).json(character);
-  else next();
+
+  if (character) {
+    res.status(203).render('characters', {
+      page_title: `${character.name} was just updated`,
+      autheticated: true,
+      character: character,
+    });
+  } else {
+    next();
+  }
+
+  // if (character) res.status(203).json(character);
+  // else next();
 });
 
 // @route    DELETE characters/:chrId
@@ -79,8 +104,17 @@ router.delete('/:chrId', (req, res, next) => {
       return true;
     }
   });
-  if (character) res.status(204).json(character);
-  else next();
+  // if (character) res.status(204).json(character);
+  // else next();
+  if (character) {
+    res.status(204).render('characters', {
+      page_title: `${character.name} was just deleted`,
+      autheticated: true,
+      character: character,
+    });
+  } else {
+    next();
+  }
 });
 
 module.exports = router;

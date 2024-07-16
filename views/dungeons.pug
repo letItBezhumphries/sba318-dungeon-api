@@ -1,4 +1,21 @@
 extends layouts/main-layout.pug
 
 block content
-  p This content is from dungeons.pug! 
+  p This content is from dungeons.pug!
+block more_content 
+  p Your new dungeon
+  table 
+    tbody 
+      tr
+        td Dungeon name 
+        td #{ dungeon.dungeon_name }
+      tr 
+        td id 
+        td #{ dungeon.id }
+      tr 
+        td Size 
+        td #{ dungeon.size }
+      tr
+        td Monsters 
+        td #{ dungeon.monsters.map(monster) => monster.name }
+        

@@ -1,20 +1,15 @@
+include ../partials/mixins
 <!DOCTYPE html>
 html(lang="en")
-    head
-        title Home Page
+    include ../partials/head.pug
     body
-      nav(class='navbar')
-        h1(class='nav-header') 
-          a(href="/" class='nav-link') D&D Dungeon Builder
-        ul
-          li
-            a(href="/characters" class='nav-link') Characters 
-          li 
-            a(href="/monsters" class='nav-link') Monsters  
-          li 
-            a(href="/dungeons" class='nav-link') Dungeons
-          li 
-            a(href=authRoute class='nav-link')= authRoute 
-      h1 This h1 is from the layout.
-      hr
+      include ../partials/navbar.pug
+      //- include ../partials/header.pug
+      include ../partials/header.pug
       block content
+      section
+        
+        ul
+          for user in users
+            li=user
+      block more_content

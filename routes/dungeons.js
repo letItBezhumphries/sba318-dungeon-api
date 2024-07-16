@@ -4,12 +4,17 @@ const { faker } = require('@faker-js/faker');
 
 /* pre-db dungeons data */
 const dungeons = require('../data/dungeons');
+const monsters = require('../data/monsters');
 
 // @route    GET /dungeons
 // @desc     get all dungeons
 // @access   Public
 router.get('/', (req, res) => {
-  res.status(200).render('dungeons');
+  res.status(200).render('dungeons', {
+    page_title: 'Dungeons Built',
+    dungeons: dungeons,
+    monsters: monsters,
+  });
 });
 
 // @route    GET /dungeons/:id
@@ -23,7 +28,11 @@ router.get('/:dgId', (req, res, next) => {
   });
 
   if (dungeon) {
-    res.status(200).json(dungeon);
+    res.status(200).render('dungeons', {
+      page_title: `${dungeon.dungeon_name} details`,
+      dungeon: dungeon,
+      authenticated: true,
+    });
   } else {
     next();
   }
@@ -47,7 +56,12 @@ router.post('/', (req, res, next) => {
 
   dungeons.push(newDungeon);
 
-  res.status(201).redirect(`/dungeons/:${newDungeon.id}`);
+  // res.status(201).redirect(`/dungeons/:${newDungeon.id}`);
+  res.status(201).render('dungeons', {
+    page_title: `${newDungeon.dungeon_name} has been discovered!`,
+    authenticated: true,
+    dungeon: newDungeon,
+  });
 });
 
 // Update route - update a dungeon by id
@@ -63,8 +77,16 @@ router.put('/:dgId', (req, res, next) => {
       return true;
     }
   });
-  if (dungeon) res.status(203).json(dungeon);
-  else next();
+
+  if (dungeon) {
+    res.status(203).render('dungeons', {
+      page_title: `${dungeon.dungeon_name} has been updated!`,
+      authenticated: true,
+      dungeon: dungeon,
+    });
+  }
+  // if (dungeon) res.status(203).render('dungeon', { dungeon });
+  // else next();
 });
 
 // @route    DELETE dungeons/:dgId
@@ -77,8 +99,15 @@ router.delete('/:dgId', (req, res, next) => {
       return true;
     }
   });
-  if (dungeon) res.status(204).json(dungeon);
-  else next();
+  // if (dungeon) res.status(204).render('dungeon', { dungeon });
+  // else next();
+  if (dungeon) {
+    res.status(204).render('dungeons', {
+      page_title: `${dungeon.dungeon_name} has been deleted!`,
+      authenticated: true,
+      dungeon: dungeon,
+    });
+  }
 });
 
 module.exports = router;
