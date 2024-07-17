@@ -5,6 +5,7 @@ require('dotenv').config();
 const PORT = process.env.PORT;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const app = express();
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 // const connectDB = require('./db/index');
 /* Pre database */
@@ -44,6 +45,10 @@ app.get('/', (req, res) => {
 });
 
 app.set('view engine', 'pug');
+
+/* handle any requests that fall through */
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`you are listening on localhost on port ${PORT}`);

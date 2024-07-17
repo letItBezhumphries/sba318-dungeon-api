@@ -33,10 +33,10 @@ mixin user-form
 //-         button(type="submit") Submit
 
 
-//- mixin monsters-list
-//-   div(class='monsters-list-container') 
-//-     for monster in monsters
-//-       include ./monster.pug 
+mixin monsters-list
+  div(class='monsters-list-container') 
+    for monster in monsters
+      include ./monster.pug 
 
 //- mixin users-list 
 //-   div(class='users-list-container')
