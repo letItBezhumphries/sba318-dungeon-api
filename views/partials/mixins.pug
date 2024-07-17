@@ -1,11 +1,12 @@
 
 
 mixin user-form
-    form(action="/users", method="post" class!=attributes.class)
-        input#username(type="text", name="username", placeholder="Username")
-        input#user-email(type="email", name="user-email", placeholder="Email Address")
-        input#user-password(type="password", name="user-password", placeholder="Password")
-        button(type="submit") Submit
+    form(action="/api/users", method="post" class!=attributes.class)
+        div(class="user-form")
+            input#username(type="text", name="username", placeholder="Username")
+            input#user-email(type="email", name="user-email", placeholder="Email Address")
+            input#user-password(type="password", name="user-password", placeholder="Password")
+            button(type="submit") Submit
 
 
 //- mixin character-form 

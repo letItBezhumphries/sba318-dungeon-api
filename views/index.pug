@@ -9,8 +9,5 @@ block content_authenticatedNav
     li(class='nav-link') 
       a(href="/login") Login  
 block content
-  p This content is from index.pug!
-block more_content
-  p The best movie is #{ bestMovie }
-  p= bestMovie
-  +user-form
+  div#app
+    +user-form
